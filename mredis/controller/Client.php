@@ -18,7 +18,6 @@ class Client extends Controller
 
     public function index()
     {
-
         $this->dados['headTitulo'] = 'Area-selos';
         $this->dados['headDescricao'] = 'Area-selos';
         $this->dados['headPagina'] = 'Area';
