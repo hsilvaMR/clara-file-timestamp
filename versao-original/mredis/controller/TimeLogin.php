@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers\Timestamp;
+<?php namespace App\Http\Controllers\Timestamp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,27 +9,19 @@ use Cookie;
 
 class TimeLogin extends Controller
 {
-  private $dados = [];
+  private $dados=[];
+  
+  public function index(){
+    $this->dados['headTitulo']='';
+    $this->dados['headDescricao']='';
+    $this->dados['headFoto']='';
+    $this->dados['separador']='time';
 
-  public function index()
-  {
-    $this->dados['headTitulo'] = '';
-    $this->dados['headDescricao'] = '';
-    $this->dados['headFoto'] = '';
-    $this->dados['separador'] = 'time';
+  	return view('pages/timestamp/time-login', $this->dados);
+  } 
 
-    return view('pages/timestamp/time-login', $this->dados);
-  }
+  public function loginPost(Request $request){
 
-  public function loginPost(Request $request)
-  {
-
-
-    /*
-         ----- dados de acesso-----
-          email : hsilva@mredis.com
-          password : Hkn15d77
-      */
 
     /*$email = trim($request->email);
     $password = Hash::make($request->password);
@@ -58,10 +48,10 @@ class TimeLogin extends Controller
     $email = $request->username;
     $password = $request->password;
 
-    $client = \DB::table('time_clients')->where('email', $email)->where('password', $password)->first();
+    $client = \DB::table('time_clients')->where('email',$email)->where('password',$password)->first();
 
-    if ($client->id) {
-      \DB::table('time_clients')->where('id', $client->id)->update(['ultimo_acesso' => strtotime(date('Y-m-d H:i:s'))]);
+    if($client->id){
+      \DB::table('time_clients')->where('id',$client->id)->update([ 'ultimo_acesso' => strtotime(date('Y-m-d H:i:s')) ]);
 
       //$values = $client->id;
       //setcookie("log", $values, time()+3600);
@@ -70,12 +60,11 @@ class TimeLogin extends Controller
         'client' => $client->id,
         'message' => 'sucesso'
       ];
-
-      echo json_encode($resposta, true);
-      //return  json_encode($resposta,true);
-
-    } else {
+      
+      echo json_encode($resposta,true);
+   
+    }else{
       return 'Este utilizador não existe';
-    }
+    } 
   }
 }
