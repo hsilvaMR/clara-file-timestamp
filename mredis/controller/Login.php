@@ -33,6 +33,12 @@ class Login extends Controller
 	public function formLogin(Request $request)
 	{
 
+		/*
+		dados login 
+		user:hsilva@mredis.com
+		pass:Hkn15d77
+		*/
+
 		$email = trim($request->email);
 		$password = trim($request->password);
 
@@ -49,7 +55,7 @@ class Login extends Controller
 
 		$client = \DB::table('time_clients')->where('email', $email)->first();
 
-		if (isset($client->id)) {
+		if (isset($client->id) &&  $client->id != '') {
 
 			if (!Hash::check($password, $client->password)) {
 				return 'Dados incorretos. Email ou password incorretos.';
@@ -67,8 +73,6 @@ class Login extends Controller
 			return 'Utilizador inexistente. Registe-se!';
 		}
 
-
-
 		return json_encode($resposta, true);
 	}
 
@@ -78,7 +82,6 @@ class Login extends Controller
 
 		$email = trim($request->email);
 		$password = trim($request->password);
-
 
 		if (empty($email)) {
 			return 'Campo endereço de email vazio.';

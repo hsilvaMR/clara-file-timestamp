@@ -11,23 +11,25 @@
 |
 */
 
-Route::get('/welcome', function (){ return view('welcome'); });
+Route::get('/welcome', function () {
+	return view('welcome');
+});
 
 ################
 #     SITE     #
 ################
-Route::get('/v1','Home@index')->name('homePage');
-Route::get('/why','Why@index')->name('whyPage');
-Route::get('/who','Who@index')->name('whoPage');
-Route::get('/portfolio-v1','Portfolio@index')->name('portfolioPage');
-Route::get('/mcode-v1','Mcode@index')->name('mcodePage');
-Route::get('/contacts','Contacts@index')->name('contactsPage');
+Route::get('/v1', 'Home@index')->name('homePage');
+Route::get('/why', 'Why@index')->name('whyPage');
+Route::get('/who', 'Who@index')->name('whoPage');
+Route::get('/portfolio-v1', 'Portfolio@index')->name('portfolioPage');
+Route::get('/mcode-v1', 'Mcode@index')->name('mcodePage');
+Route::get('/contacts', 'Contacts@index')->name('contactsPage');
 Route::post('/contacts', 'Contacts@contactsForm')->name('contactsForm');
 
 ###############
 #     API     #
 ###############
-Route::group(['prefix' => 'api'], function(){
+Route::group(['prefix' => 'api'], function () {
 	Route::get('/', 'Api\Index@index')->name('indexAPI');
 	Route::post('/form', 'Api\Index@form')->name('formAPI');
 
@@ -46,18 +48,16 @@ Route::group(['prefix' => 'api'], function(){
 #     SITE 2    #
 #################
 
-Route::get('/','Site\Home@index')->name('homePageV2');
-Route::get('/crianca2021','Site\Home@crianca2021')->name('crianca2021PageV2');
-Route::get('/sector-publico','Site\Pub@index')->name('PublicPageV2');
-Route::get('/sector-privado','Site\Priv@index')->name('PrivatePageV2');
-Route::get('/sobre-nos','Site\Who@index')->name('WhoPageV2');
-Route::get('/portfolio','Site\Portfolio@index')->name('portfolioPageV2');
+Route::get('/', 'Site\Home@index')->name('homePageV2');
+Route::get('/crianca2021', 'Site\Home@crianca2021')->name('crianca2021PageV2');
+Route::get('/sector-publico', 'Site\Pub@index')->name('PublicPageV2');
+Route::get('/sector-privado', 'Site\Priv@index')->name('PrivatePageV2');
+Route::get('/sobre-nos', 'Site\Who@index')->name('WhoPageV2');
+Route::get('/portfolio', 'Site\Portfolio@index')->name('portfolioPageV2');
 Route::post('/contacto-parceria', 'Site\Priv@contact')->name('formParceria');
-Route::get('/contacto','Site\Contacts@index')->name('contactsPageV2');
+Route::get('/contacto', 'Site\Contacts@index')->name('contactsPageV2');
 Route::post('/contacts-form', 'Site\Contacts@contactsForm')->name('contactsFormV2');
-Route::get('/mcode','Site\Mcode@index')->name('mcodePageV2');
-
-
+Route::get('/mcode', 'Site\Mcode@index')->name('mcodePageV2');
 
 
 #####################
@@ -69,16 +69,13 @@ Route::get('/timestamp-createDateOAL', 'Timestamp\Time@createDateOAL')->name('cr
 
 
 //Enviar documento
-
 Route::get('/timestampLogin', 'Timestamp\TimeLogin@index')->name('loginTime');
 Route::post('/timestamp-login-form', 'Timestamp\TimeLogin@loginPost')->name('loginPostTime');
 
 
 //Receber documento
-
 Route::post('/timestamp-receive', 'Timestamp\Time@postDocumento')->name('receiveDocument');
 Route::get('/pdf/{name_doc}/{timestamp}/{code_file}', 'Timestamp\Time@pdf')->name('pdf');
-
 
 /*SELOS TEMPORAIS*/
 Route::get('/sl', 'Timestamp\Home@index')->name('homeTimePage');
@@ -94,12 +91,11 @@ Route::post('/sl-ativar-conta', 'Timestamp\Login@formAtivarConta')->name('formAt
 Route::get('/sl-logout', 'Timestamp\Login@logout')->name('logoutContaS');
 
 /*SELOS TEMPORAIS - AREA CLIENTE*/
-Route::group([ 'middleware' => ['Client'] ], function () {
+Route::group(['middleware' => ['Client']], function () {
 	Route::get('/sl-area-client', 'Timestamp\Client@index')->name('clientTimePage');
 	Route::get('/sl-area-client-api', 'Timestamp\Client@api')->name('clientTimeApiPage');
-
 	Route::get('/sl-area-client-pagamentos', 'Timestamp\Client@pagamentos')->name('clientTimePagPage');
-
-	Route::post('/selos-add-conta', 'Timestamp\Client@formAddConta')->name('formAddConta');
+	Route::post('/selos-add-conta', 'Timestamp\Client@formAddConta1')->name('formAddConta');
+	// Route::post('/selos-add-conta', 'Timestamp\Client@formAddConta')->name('formAddConta');
 
 });

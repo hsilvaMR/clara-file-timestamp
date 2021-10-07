@@ -44,6 +44,7 @@ class Home extends Controller
 		$pais_entidade = trim($request->pais_entidade);
 		$pacote = trim($request->pacote);
 
+		$message = "";
 
 		if (empty($invoiceEmail)) {
 			return 'Campo email de recepção da fatura vazio.';
@@ -79,9 +80,11 @@ class Home extends Controller
 			return 'Campo país vazio.';
 		}
 
-		\DB::table('time_compra')
+		$check = \DB::table('time_compra')
 			->insert([
-				'pacote' => $pacote,
+				'id_cliente' => $pacote,
+				'id_conta' => $pacote,
+				'id_pacote' => $pacote,
 				'tipo_fatura' => 'eletronica',
 				'email_fatura' => $invoiceEmail,
 				'nome_entidade' => $nome_entidade,
@@ -94,12 +97,19 @@ class Home extends Controller
 				'localidade_entidade' => $localidade_entidade,
 				'pais_entidade' => $pais_entidade,
 				//https://www.epochconverter.com/ conversao de timestamp  1633535238
-				'data' => \Carbon\Carbon::now()->timestamp
+				// 'data' => \Carbon\Carbon::now()->timestamp
+				'data' => strtotime(date('Y-m-d H:i:s')),
 			]);
+
+		if ($check) {
+			$message = 'Dados guardados com sucesso. Procedemos ao pagamento.';
+		} else {
+			return "Erro na insercao de dados. Por favor tenta de novo.";
+		}
 
 		$resposta = [
 			'estado' => 'sucesso',
-			'mensagem' => 'Dados guardados com sucesso. Procedemos ao pagamento.'
+			'mensagem' => $message
 		];
 
 		return json_encode($resposta, true);

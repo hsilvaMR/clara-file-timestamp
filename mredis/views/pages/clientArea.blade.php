@@ -27,7 +27,7 @@
 				<div style="margin-bottom:50px;">
 					<div>
 						<h4 style="margin-bottom:20px;">Pacotes adquiridos</h4>
-						@if(count($user_conta) > 0)
+						@if($user_conta!=null || $user_conta>0)
 						@foreach($user_conta as $conta)
 						<label style="border:1px solid #000;width:200px;padding:10px;margin-right: 10px;"
 							onclick="showDadosEdit({{ $conta->id }});">
@@ -47,10 +47,8 @@
 						@endif
 					</div>
 
-
 					<button class="bt" onclick="showConta();">Adicionar Conta</button>
 				</div>
-
 
 				<form id="formAddConta" action="{{route('formAddConta')}}" name="form" method="post"
 					style="display:none;">
@@ -86,6 +84,7 @@
 					</div>
 				</form>
 
+				@if($user_conta!='')
 				@foreach($user_conta as $conta)
 				<form id="formEditConta_{{ $conta->id }}" action="{{route('formAddConta')}}" name="form" method="post"
 					style="display:none;">
@@ -123,16 +122,12 @@
 					</div>
 				</form>
 				@endforeach
-
-
-
-
+				@endif
 			</div>
 		</div>
 	</div>
 </div>
 @stop
-
 @section('css')
 <link href="https://use.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
 @stop
@@ -148,11 +143,12 @@
 
 <script>
 	function showDadosEdit(id){
-		@foreach($user_conta as $conta)
+		@if(isset( $user_conta) && $user_conta!=null)
+			@foreach($user_conta as $conta)
 			$('#formEditConta_'+{!! $conta->id !!}).hide();
-		@endforeach
+			@endforeach
 		$('#formEditConta_'+id).show();
-
+		@endif
 	}
 
 	$('#formAddConta').on('submit',function(e) {
@@ -189,6 +185,7 @@
 	 	});
 	});
 
+	@if($user_conta!=null || $user_conta>0)
 	@foreach($user_conta as $conta)
 		$('#formEditConta_'+{!! $conta->id !!}).on('submit',function(e) {
 			$('#labelAviso_'+{!! $conta->id !!}).html('');
@@ -225,5 +222,6 @@
 		 	});
 		});
 	@endforeach
+	@endif
 </script>
 @stop

@@ -128,9 +128,6 @@
 									</div>
 								</div>
 
-
-
-
 								<div style="border:1px solid #000;padding:30px 15px;margin-top:20px;text-align:left;">
 									<h5>Dados para envio da Fatura</h5>
 
@@ -243,26 +240,6 @@
 	}
 </script>
 
-<script type="text/javascript">
-	/*
-	var handler = StripeCheckout.configure({
-		key: 'pk_test_51J5BxHLOqY4FXPTidBWVoBMdKm4k1F8ZPA1iUIBKi8VEWzY29eud2YDKhrjAyFweq5isEafQpSxQesFSqKzaogEC00G8YHbgsR',
-      	image: '',
-      	locale: 'pt-BR',
-      	token: function(token) {
-        	// You can access the token ID with `token.id`.
-        	// Get the token ID to your server-side code for use.
-        	window.location="";
-      	}
-    }); */
- 
-    // Close Checkout on page navigation:
-    /*window.addEventListener('popstate', function() {
-    	handler.close();
-    	document.getElementById("formCSelos").reset();
-    });*/
-</script>
-
 <script>
 	$('#formCSelos').on('submit',function(e) {
 		$('#labelAviso').html('');
@@ -272,40 +249,30 @@
 	   		type: "POST",
 	   		url: form.attr('action'),
 	   		data: new FormData(this),
+			dataType: "json",  
 			contentType: false,
 			processData: false,
 			cache: false,
-			headers:{ 'X-CSRF-Token':'{!! csrf_token() !!}' }
-	 	})
-	 	.done(function(resposta){
-		   	try{ resp=$.parseJSON(resposta); }
-		    catch (e){
-		        if(resposta){
-					console.log(resposta)
-		        	$('#labelAviso').css('color','red');
-		    		$('#labelAviso').html(resposta);
-		    	}
-		        return;
-		    }
-
-		    if(resp.estado=='sucesso'){
+			headers:{ 'X-CSRF-Token':'{!! csrf_token() !!}' },
+			success: function(resposta) {
+        		//alert(data.d);
 				console.log(resposta)
-		    	$('#labelAviso').css('color','green');
-		    	$('#labelAviso').html(resp.mensagem);
 
-                 // striper para pagamentos 
-				//var preco_inicial = $('#preco_inicial').val();
-
-		      	// handler.open({
-		        // 	name: '',
-		        // 	description: '',
-		        // 	currency: 'EUR',
-		        // 	amount: preco_inicial,
-		        // 	email:'',
-		      	// });
-		      	e.preventDefault();
-		    }
-	 	});
+				if(resp.estado=='sucesso'){
+					//console.log(resposta)
+		    		$('#labelAviso').css('color','green');
+		    		$('#labelAviso').html(resp.mensagem);
+               
+		      		e.preventDefault();
+		    	}
+    		},
+    		error: function(resposta){
+        		//alert("fail");
+				console.log(resposta)
+				$('#labelAviso').css('color','red');
+		    	$('#labelAviso').html(resposta);
+    		}
+	 	})
 	});
 </script>
 @stop
