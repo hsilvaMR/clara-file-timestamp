@@ -62,7 +62,7 @@ class Login extends Controller
 			}
 			\DB::table('time_clients')->where('id', $client->id)->update(['ultimo_acesso' => strtotime(date('Y-m-d H:i:s'))]);
 
-			//Criar sessão (cliente) salvar a cookie 
+			//Criar sessão (cliente) salvar a id_cliente na cookie
 			Cookie::queue(Cookie::make('time_user_cookie', $client->id, 43200));
 
 			$resposta = [

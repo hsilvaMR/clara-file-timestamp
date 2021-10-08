@@ -26,56 +26,34 @@ class TimeLogin extends Controller
   public function loginPost(Request $request)
   {
 
-
     /*
          ----- dados de acesso-----
           email : hsilva@mredis.com
           password : Hkn15d77
       */
 
-    /*$email = trim($request->email);
-    $password = Hash::make($request->password);
-    $token = str_random(12);
-        
+    $email = trim($request->username);
+    $password = trim($request->password);
 
-    $user = \DB::table('time_clients')->where('email', $email)->first();
-    if(empty($user)){ return 'Este utilizador não está registado'; }
-    if(!Hash::check($request->password, $user->password)){ return 'Password inválida!'; }
+    if (empty($email)) {
+      return 'Deve preencher o campo. Email';
+    }
 
-    if (isset($user->id)) {
- 
-      \DB::table('time_clients')
-                ->where('email',$email)
-                ->update(['ultimo_acesso' => strtotime(date('Y-m-d H:i:s'))]);
-    }*/
-
-
-
-    /*$email = 'teste@mail.com';
-    $password = '123456';*/
-    $token = str_random(12);
-
-    $email = $request->username;
-    $password = $request->password;
+    if (empty($password)) {
+      return 'Deve preencher o campo. Password';
+    }
 
     $client = \DB::table('time_clients')->where('email', $email)->where('password', $password)->first();
 
-    if ($client->id) {
-      \DB::table('time_clients')->where('id', $client->id)->update(['ultimo_acesso' => strtotime(date('Y-m-d H:i:s'))]);
-
-      //$values = $client->id;
-      //setcookie("log", $values, time()+3600);
-
-      $resposta = [
-        'client' => $client->id,
-        'message' => 'sucesso'
-      ];
-
-      echo json_encode($resposta, true);
-      //return  json_encode($resposta,true);
-
-    } else {
+    if (empty($client->id)) {
       return 'Este utilizador não existe';
     }
+    \DB::table('time_clients')->where('id', $client->id)->update(['ultimo_acesso' => strtotime(date('Y-m-d H:i:s'))]);
+
+    $resposta = [
+      'estado' => 'sucesso',
+      'message' => 'Login Efectuado Com Sucesso.'
+    ];
+    return  json_encode($resposta, true);
   }
 }

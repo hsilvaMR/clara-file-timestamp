@@ -26,7 +26,7 @@ class Time extends Controller
     return $get;
   }
 
-  //Função que recebe o documento que será para marcar de data/hora
+  // //Função que recebe o documento que será para marcação de data/hora
   //Guarda o documento
   //Cria o selo temporal
 

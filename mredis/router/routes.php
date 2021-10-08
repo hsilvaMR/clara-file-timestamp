@@ -43,7 +43,6 @@ Route::group(['prefix' => 'api'], function () {
 	Route::get('/status-message', 'Api\Index@statusMessage')->name('statusMessageAPI');
 });
 
-
 #################
 #     SITE 2    #
 #################
@@ -58,7 +57,6 @@ Route::post('/contacto-parceria', 'Site\Priv@contact')->name('formParceria');
 Route::get('/contacto', 'Site\Contacts@index')->name('contactsPageV2');
 Route::post('/contacts-form', 'Site\Contacts@contactsForm')->name('contactsFormV2');
 Route::get('/mcode', 'Site\Mcode@index')->name('mcodePageV2');
-
 
 #####################
 #     TIMESTAMPS    #

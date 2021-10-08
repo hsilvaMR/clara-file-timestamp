@@ -1,11 +1,10 @@
-
 @extends('pages/timestamp/layouts/default')
 
 @section('content')
 
 <div class="container">
 	<div style="padding:50px 0px;">
-		
+
 		<h4 style="text-align:center;">Iniciar sessão / Registo</h4>
 
 		<form id="formLogin" action="{{route('formLSelos')}}" name="form" method="post">
@@ -14,11 +13,11 @@
 					<div style="border: 1px solid #ccc;padding:20px;margin-top:30px;">
 						<input class="ip" type="text" name="email" placeholder="Endereço de email">
 						<input class="ip" type="password" name="password" placeholder="Palavra-passe">
-						<div style="text-align:center;"><button class="bt" > Entrar</button></div>
-
+						<div style="text-align:center;"><button class="bt"> Entrar</button></div>
 
 						<div style="margin-top:20px;text-align:center;">
-							<label style="margin-bottom:20px;;">Ainda não está registado? <a style="cursor:pointer;" onclick="registarClient();">Registe-se aqui!</a></label><br>
+							<label style="margin-bottom:20px;;">Ainda não está registado? <a style="cursor:pointer;"
+									onclick="registarClient();">Registe-se aqui!</a></label><br>
 							<label id="labelAviso"></label>
 						</div>
 					</div>
@@ -33,11 +32,12 @@
 					<div style="border: 1px solid #ccc;padding:20px;margin-top:30px;">
 						<input class="ip" type="text" name="email" placeholder="Endereço de email">
 						<input class="ip" type="password" name="password" placeholder="Palavra-passe">
-						<div style="text-align:center;"><button class="bt" > Registar</button></div>
+						<div style="text-align:center;"><button class="bt"> Registar</button></div>
 
 
 						<div style="margin-top:20px;text-align:center;">
-							<label style="margin-bottom:20px;">Já tem conta? <a style="cursor:pointer;" onclick="inciarSessao();">Inicie sessão!</a></label><br>
+							<label style="margin-bottom:20px;">Já tem conta? <a style="cursor:pointer;"
+									onclick="inciarSessao();">Inicie sessão!</a></label><br>
 							<label id="labelAviso_2"></label>
 						</div>
 					</div>
@@ -59,7 +59,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
-
 	function registarClient(){
 		$('#formLogin').hide();
 		$('#formRegister').show();

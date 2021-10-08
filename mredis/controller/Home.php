@@ -28,9 +28,11 @@ class Home extends Controller
 		return view('pages/timestamp/home', $this->dados);
 	}
 
-
 	public function formCompra(Request $request)
 	{
+
+		$id_cliente = Cookie::get('time_user_cookie');
+		$conta = \DB::table('time_clients_conta')->where('id_cliente', $id_cliente)->first();
 
 		$invoiceEmail = trim($request->invoiceEmail);
 		$nome_entidade = trim($request->nome_entidade);
@@ -80,11 +82,13 @@ class Home extends Controller
 			return 'Campo país vazio.';
 		}
 
-		$check = \DB::table('time_compra')
+		// $check = \DB::table('time_compra')
+
+		\DB::table('time_compra')
 			->insert([
-				'id_cliente' => $pacote,
-				'id_conta' => $pacote,
-				'id_pacote' => $pacote,
+				'id_cliente' => $id_cliente,
+				'id_conta' => $conta->id,
+				//'id_pacote' => $pacote,
 				'tipo_fatura' => 'eletronica',
 				'email_fatura' => $invoiceEmail,
 				'nome_entidade' => $nome_entidade,
@@ -98,18 +102,20 @@ class Home extends Controller
 				'pais_entidade' => $pais_entidade,
 				//https://www.epochconverter.com/ conversao de timestamp  1633535238
 				// 'data' => \Carbon\Carbon::now()->timestamp
-				'data' => strtotime(date('Y-m-d H:i:s')),
+				'data' => strtotime(date('Y-m-d H:i:s'))
 			]);
 
-		if ($check) {
-			$message = 'Dados guardados com sucesso. Procedemos ao pagamento.';
-		} else {
-			return "Erro na insercao de dados. Por favor tenta de novo.";
-		}
+		$message = 'Dados guardados com sucesso. Procedemos ao pagamento.';
+
+		// if ($check) {
+		// 	$message = 'Dados guardados com sucesso. Procedemos ao pagamento.';
+		// } else {
+		// 	return "Erro na insercao de dados. Por favor tenta de novo.";
+		// }
 
 		$resposta = [
 			'estado' => 'sucesso',
-			'mensagem' => $message
+			'mensagem' => $message   // mensagem
 		];
 
 		return json_encode($resposta, true);

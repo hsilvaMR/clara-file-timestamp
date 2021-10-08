@@ -26,14 +26,14 @@
 			<div class="col-md-8">
 				@if(Cookie::get('time_user_compra_cookie'))
 				<label class="lb">Número de selos disponíveis</label>
-				<input class="ip" type="" name="nome" value="{{ $user->numero_selos }}">
+				<input class="ip" type="" name="nome" value="{{ $user->numero_selos }}" readonly>
 				<label class="lb">Data de validade dos selos</label>
 				<input class="ip" type="" name="email" @if($user->data_validade_selos != '0')
-				value="{{ $user->data_validade_selos }}" @endif>
+				value="{{ $user->data_validade_selos }}" @endif readonly>
 				<label class="lb">Data de Registo</label>
-				<input class="ip" type="" name="contacto" value="{{ date('Y-m-d',$user->data) }}">
+				<input class="ip" type="" name="contacto" value="{{ date('Y-m-d',$user->data) }}" readonly>
 				<label class="lb">Apresentação</label>
-				<textarea class="tx"></textarea>
+				<textarea class="tx" readonly></textarea>
 				@else
 				<div style="padding:40px 0px;text-align:center;">
 					<h3 style="margin-bottom:50px;">Pacotes de selos temporais</h3>
@@ -245,21 +245,34 @@
 		$('#labelAviso').html('');
 	 	var form = $(this);
 	 	e.preventDefault();
+
+		 /*var myAjax = new XMLHttpRequest();
+		 myAjax.open("POST", document.getElementById("#formCSelos").value + "ajax-test", true);
+		 myAjax.onreadystatechange() = function(){
+			// ajax.onreadystatechange() = function(){
+
+			if(this.readyState== 4 && this.status==200){
+				console.log(this.responseText);
+     		}
+			if(this.status==500){
+				console.log(this.responseText);
+			}
+			// if(this.status==404){
+			// 	console.log(this.responseText);
+			// }	
+		}*/
 	 	$.ajax({
 	   		type: "POST",
 	   		url: form.attr('action'),
 	   		data: new FormData(this),
-			dataType: "json",  
+			dataType: "JSON",  
 			contentType: false,
 			processData: false,
 			cache: false,
 			headers:{ 'X-CSRF-Token':'{!! csrf_token() !!}' },
 			success: function(resposta) {
-        		//alert(data.d);
-				console.log(resposta)
-
+				//console.log(resposta)
 				if(resp.estado=='sucesso'){
-					//console.log(resposta)
 		    		$('#labelAviso').css('color','green');
 		    		$('#labelAviso').html(resp.mensagem);
                
