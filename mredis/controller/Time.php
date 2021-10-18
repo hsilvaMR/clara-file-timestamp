@@ -56,14 +56,11 @@ class Time extends Controller
           $hora = $value;
         }
 
-
         $files = [];
-
 
         $array_nome = [];
         $array_resposta = [];
         foreach ($post_file as $value) {
-
 
           $files[] = ['file' => $value];
 
@@ -148,7 +145,6 @@ class Time extends Controller
     $this->dados['name_file'] = $name_doc;
     $this->dados['timestamp'] = $timestamp;
     $this->dados['code_file'] = $code_file;
-
 
     ob_start();
     echo view('pages/timestamp/time-selo-pdf', $this->dados);

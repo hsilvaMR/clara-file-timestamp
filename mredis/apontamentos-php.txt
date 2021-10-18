@@ -1,0 +1,9 @@
+
+
+
+
+
+basename()-->Retorna apenas a parte que corresponde ao nome do arquivo de um caminho/path
+https://www.php.net/manual/pt_BR/function.basename.php
+
+dirname() -->  Retorna o caminho/path do diretório pai

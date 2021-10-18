@@ -25,11 +25,17 @@ class TimeLogin extends Controller
 
   public function loginPost(Request $request)
   {
-
     /*
          ----- dados de acesso-----
-          email : hsilva@mredis.com
-          password : Hkn15d77
+          email: hsilva@mredis.com
+          password: Hkn15d77
+
+          email:test1@mredis.com
+          password: 12345678
+
+          email:test2@mredis.com
+          password: 12345679
+        ------------------------
       */
 
     $email = trim($request->username);

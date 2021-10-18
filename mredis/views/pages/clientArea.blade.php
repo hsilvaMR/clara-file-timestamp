@@ -84,6 +84,14 @@
 					</div>
 				</form>
 
+
+				{{--  upload ficheiro test  --}}
+				<div class="d-flex justify-content-center  box-uploadFile">
+					<label class="form-label" for="customFile">Adicionar o Ficheiro</label>
+					<input type="file" class="form-control" name="fileClient" id="fileUploadCliente" />
+				</div>
+
+
 				@if($user_conta!='')
 				@foreach($user_conta as $conta)
 				<form id="formEditConta_{{ $conta->id }}" action="{{route('formAddConta')}}" name="form" method="post"
@@ -151,6 +159,12 @@
 		@endif
 	}
 
+	
+
+ // ler e validar ficheiro end 
+
+
+ // adiciona conta 
 	$('#formAddConta').on('submit',function(e) {
 		$('#labelAviso').html('');
 	 	var form = $(this);
@@ -211,7 +225,6 @@
 			    	}
 			        return;
 			    }
-			    
 
 			    if(resp.estado=='sucesso'){
 					console.log(resposta)

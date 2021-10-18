@@ -18,7 +18,6 @@
 
 @stop
 
-
 @section('css')
 @stop
 
